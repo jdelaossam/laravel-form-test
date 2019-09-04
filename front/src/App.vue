@@ -6,8 +6,8 @@
           <b-button size="sm" title="Edit" @click.stop="targetEdit(row.item)" variant="primary" class="mr-1">
             Editar
           </b-button>
-          <b-button size="sm" title="Edit" @click.stop="targetEdit(row.item)" variant="warning" class="mr-1">
-            danger
+          <b-button size="sm" title="Edit" @click.stop="targetRemove(row.item)" variant="warning" class="mr-1">
+            Eliminar
           </b-button>
       </template>
     </b-table>
@@ -17,7 +17,7 @@
 
 <script>
 import NavBar from './components/Menu'
-
+/* eslint-disable */
 export default {
   name: 'app',
   components: {
@@ -43,6 +43,25 @@ export default {
     targetEdit (row) {
       // eslint-disable-next-line
       console.log(row)
+    },
+    targetRemove (row) {
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to delete everything.', {
+          title: 'Please Confirm',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          okTitle: 'YES',
+          cancelTitle: 'NO',
+          footerClass: 'p-2',
+          hideHeaderClose: false,
+          centered: true
+        })
+          .then(value => {
+            console.log(value)
+          })
+          .catch(err => {
+            // An error occurred
+          })
     }
   },
 }
