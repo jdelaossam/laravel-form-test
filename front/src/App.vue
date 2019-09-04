@@ -1,16 +1,36 @@
 <template lang="html">
   <div id="app">
     <NavBar/>
-    <b-table striped hover :items="items" :fields="fields">
-      <template slot="[actions]" slot-scope="row">
-          <b-button size="sm" title="Edit" @click.stop="targetEdit(row.item)" variant="primary" class="mr-1">
-            Editar
-          </b-button>
-          <b-button size="sm" title="Edit" @click.stop="targetRemove(row.item)" variant="warning" class="mr-1">
-            Eliminar
-          </b-button>
-      </template>
-    </b-table>
+    <b-container>
+      <b-form>
+        <b-row>
+          <b-col cols="2">
+            <b-form-group
+              label="Email address:"
+              description="We'll never share your email with anyone else."
+            >
+              <b-form-input
+                id="input-1"
+                v-model="form.email"
+                type="email"
+                required
+                placeholder="Enter email"
+              ></b-form-input>
+            </b-form-group>
+          </b-col>
+        </b-row>
+      </b-form>
+      <b-table striped hover :items="items" :fields="fields">
+        <template slot="[actions]" slot-scope="row">
+            <b-button size="sm" title="Edit" @click.stop="targetEdit(row.item)" variant="primary" class="mr-1">
+              Editar
+            </b-button>
+            <b-button size="sm" title="Edit" @click.stop="targetRemove(row.item)" variant="warning" class="mr-1">
+              Eliminar
+            </b-button>
+        </template>
+      </b-table>
+    </b-container>
     <router-view/>
   </div>
 </template>
@@ -25,6 +45,13 @@ export default {
   },
   data () {
     return {
+      form: {
+          email: '',
+          name: '',
+          food: null,
+          checked: []
+        },
+      foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
       items: [
           { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
           { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
@@ -62,6 +89,14 @@ export default {
           .catch(err => {
             // An error occurred
           })
+    },
+    onReset () {
+      evt.preventDefault()
+      // Reset our form values
+      this.form.email = ''
+      this.form.name = ''
+      this.form.food = null
+      this.form.checked = []
     }
   },
 }
